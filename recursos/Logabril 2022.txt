@@ -1,0 +1,10 @@
+*******************************************
+21/04/2022 1:52:40 p. m.
+btnBuscar_Click
+frm_consultar
+La cadena de entrada no tiene el formato correcto.System.FormatException: La cadena de entrada no tiene el formato correcto.
+   en System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   en System.Number.ParseInt64(String value, NumberStyles options, NumberFormatInfo numfmt)
+   en System.Convert.ToInt64(String value)
+   en Ejercicio.vista.frm_consultar.btnBuscar_Click(Object sender, EventArgs e) en C:\Users\USUARIO\source\repos\Ejercicio\Ejercicio\vista\frm_consultar.aspx.cs:línea 52
+*******************************************

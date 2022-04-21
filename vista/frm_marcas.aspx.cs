@@ -23,10 +23,27 @@ namespace Ejercicio.vista
 
        
         protected void Page_Load(object sender, EventArgs e)
-        {         
-            if (!Page.IsPostBack)
+        {
+            try
             {
-                cargargrilla();
+                if (!Page.IsPostBack)
+                    {
+                        cargargrilla();
+                    }
+            }
+            catch (Exception ex)
+            {
+                ClientScript.RegisterStartupScript(typeof(Page), "Alerta", @"<script language = ""JavaScript"">alert('Error en tiempo de ejecucion');</script>");
+                string ruta = String.Empty;
+                ruta = Server.MapPath(@"..\recursos\Log" + DateTime.Now.ToString("MMMM yyyy") + ".txt");
+                System.IO.StreamWriter archivo = System.IO.File.AppendText(ruta);
+                archivo.WriteLine("*******************************************");
+                archivo.WriteLine(DateTime.Now.ToString());
+                archivo.WriteLine("Page_Load");
+                archivo.WriteLine("frm_marcas");
+                archivo.WriteLine(ex.Message.ToString() + ex);
+                archivo.WriteLine("*******************************************");
+                archivo.Close();
             }
         }
 
@@ -44,12 +61,28 @@ namespace Ejercicio.vista
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            marcaDTO nuevo = new marcaDTO();            
-            nuevo.Descripcion = txtDescripcion.Text; 
-            string valor = mc.Agregar(nuevo);
-            txtDescripcion.Text="";
-            ClientScript.RegisterStartupScript(typeof(Page), "Alerta", @"<script language = ""JavaScript"">alert('"+valor+ "');</script>");
-            cargargrilla();
-        }
+          try
+            {
+                marcaDTO nuevo = new marcaDTO();            
+                nuevo.Descripcion = txtDescripcion.Text; 
+                string valor = mc.Agregar(nuevo);
+                txtDescripcion.Text="";
+                ClientScript.RegisterStartupScript(typeof(Page), "Alerta", @"<script language = ""JavaScript"">alert('"+valor+ "');</script>");
+                cargargrilla();
+        }catch(Exception ex)
+            {
+                ClientScript.RegisterStartupScript(typeof(Page), "Alerta", @"<script language = ""JavaScript"">alert('Error en tiempo de ejecucion');</script>");
+                string ruta = String.Empty;
+                ruta = Server.MapPath(@"..\recursos\Log" + DateTime.Now.ToString("MMMM yyyy") + ".txt");
+                System.IO.StreamWriter archivo = System.IO.File.AppendText(ruta);
+                archivo.WriteLine("*******************************************");
+                archivo.WriteLine(DateTime.Now.ToString());
+                archivo.WriteLine("btnAgregar_Click");
+                archivo.WriteLine("frm_marcas");
+                archivo.WriteLine(ex.Message.ToString() + ex);
+                archivo.WriteLine("*******************************************");
+                archivo.Close();
+              }
+}
     }
 }

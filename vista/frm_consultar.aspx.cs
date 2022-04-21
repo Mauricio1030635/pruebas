@@ -24,15 +24,50 @@ namespace Ejercicio.vista
         {
             if (!Page.IsPostBack)
             {
-                cargargrilla();
+             try { 
+                cargargrilla();                  
+            }catch(Exception ex)
+            {
+                    ClientScript.RegisterStartupScript(typeof(Page), "Alerta", @"<script language = ""JavaScript"">alert('Error en tiempo de ejecucion');</script>");
+                    string ruta = String.Empty;
+                    ruta = Server.MapPath(@"..\recursos\Log" + DateTime.Now.ToString("MMMM yyyy") + ".txt");
+                    System.IO.StreamWriter archivo = System.IO.File.AppendText(ruta);
+                    archivo.WriteLine("*******************************************");
+                    archivo.WriteLine(DateTime.Now.ToString());
+                    archivo.WriteLine("Page_Load");
+                    archivo.WriteLine("frm_consultar");
+                    archivo.WriteLine(ex.Message.ToString() + ex);
+                    archivo.WriteLine("*******************************************");
+                    archivo.Close();
+
+                }  
             }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            var info =cr.Consultar(Convert.ToInt64(txtconsulta.Text));
-            gvConsulta.DataSource = info;
-            gvConsulta.DataBind();            
+
+            try
+            {
+                 var info =cr.Consultar(Convert.ToInt64(txtconsulta.Text));
+                 gvConsulta.DataSource = info;
+                 gvConsulta.DataBind();
+            }
+            catch (Exception ex)
+            {
+                ClientScript.RegisterStartupScript(typeof(Page), "Alerta", @"<script language = ""JavaScript"">alert('Error en tiempo de ejecucion');</script>");
+                string ruta = String.Empty;
+                ruta = Server.MapPath(@"..\recursos\Log" + DateTime.Now.ToString("MMMM yyyy") + ".txt");
+                System.IO.StreamWriter archivo = System.IO.File.AppendText(ruta);
+                archivo.WriteLine("*******************************************");
+                archivo.WriteLine(DateTime.Now.ToString());
+                archivo.WriteLine("btnBuscar_Click");
+                archivo.WriteLine("frm_consultar");
+                archivo.WriteLine(ex.Message.ToString() + ex);
+                archivo.WriteLine("*******************************************");
+                archivo.Close();
+
+            }
         }
     }
 }
