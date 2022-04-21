@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="pruebasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="marca">
+    <Key>
+      <PropertyRef Name="id_marca" />
+    </Key>
+    <Property Name="id_marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vehículo">
+    <Key>
+      <PropertyRef Name="id_vehículo" />
+    </Key>
+    <Property Name="id_vehículo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_marca" Type="int" />
+    <Property Name="matricula" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="color" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="precioUnitario" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vendedor">
+    <Key>
+      <PropertyRef Name="id_vendedor" />
+    </Key>
+    <Property Name="id_vendedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cedula" Type="bigint" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="edad" Type="tinyint" Nullable="false" />
+    <Property Name="telefono" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="venta">
+    <Key>
+      <PropertyRef Name="id_venta" />
+    </Key>
+    <Property Name="id_venta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_vehículo" Type="int" />
+    <Property Name="id_vendedor" Type="int" />
+    <Property Name="fecha_venta" Type="date" />
+    <Property Name="valorVenta" Type="float" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'pruebas.dbo.ventas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="ventas">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="cedula" />
+      <PropertyRef Name="Nombre vendedor" />
+      <PropertyRef Name="Apellido vendedor" />
+      <PropertyRef Name="Matricula" />
+      <PropertyRef Name="Marca" />
+      <PropertyRef Name="Color Auto" />
+      <PropertyRef Name="Valor Unitario" />
+      <PropertyRef Name="Valor Total" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="cedula" Type="bigint" Nullable="false" />
+    <Property Name="Nombre vendedor" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellido vendedor" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Matricula" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Marca" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Color Auto" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Valor Unitario" Type="float" Nullable="false" />
+    <Property Name="Valor Total" Type="float" Nullable="false" />
+    <Property Name="Fecha venta" Type="date" />
+  </EntityType>
+  <Association Name="FK__vehículo__id_mar__267ABA7A">
+    <End Role="marca" Type="Self.marca" Multiplicity="0..1" />
+    <End Role="vehículo" Type="Self.vehículo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="marca">
+        <PropertyRef Name="id_marca" />
+      </Principal>
+      <Dependent Role="vehículo">
+        <PropertyRef Name="id_marca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__venta__id_vehícu__2C3393D0">
+    <End Role="vehículo" Type="Self.vehículo" Multiplicity="0..1" />
+    <End Role="venta" Type="Self.venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vehículo">
+        <PropertyRef Name="id_vehículo" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="id_vehículo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__venta__id_vended__2D27B809">
+    <End Role="vendedor" Type="Self.vendedor" Multiplicity="0..1" />
+    <End Role="venta" Type="Self.venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vendedor">
+        <PropertyRef Name="id_vendedor" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="id_vendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="vehiculosVendedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="cedula" Type="bigint" Mode="In" />
+  </Function>
+  <EntityContainer Name="pruebasModelStoreContainer">
+    <EntitySet Name="marca" EntityType="Self.marca" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vehículo" EntityType="Self.vehículo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vendedor" EntityType="Self.vendedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="venta" EntityType="Self.venta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ventas" EntityType="Self.ventas" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ventas].[ID] AS [ID], 
+    [ventas].[cedula] AS [cedula], 
+    [ventas].[Nombre vendedor] AS [Nombre vendedor], 
+    [ventas].[Apellido vendedor] AS [Apellido vendedor], 
+    [ventas].[Matricula] AS [Matricula], 
+    [ventas].[Marca] AS [Marca], 
+    [ventas].[Color Auto] AS [Color Auto], 
+    [ventas].[Valor Unitario] AS [Valor Unitario], 
+    [ventas].[Valor Total] AS [Valor Total], 
+    [ventas].[Fecha venta] AS [Fecha venta]
+    FROM [dbo].[ventas] AS [ventas]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__vehículo__id_mar__267ABA7A" Association="Self.FK__vehículo__id_mar__267ABA7A">
+      <End Role="marca" EntitySet="marca" />
+      <End Role="vehículo" EntitySet="vehículo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__venta__id_vehícu__2C3393D0" Association="Self.FK__venta__id_vehícu__2C3393D0">
+      <End Role="vehículo" EntitySet="vehículo" />
+      <End Role="venta" EntitySet="venta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__venta__id_vended__2D27B809" Association="Self.FK__venta__id_vended__2D27B809">
+      <End Role="vendedor" EntitySet="vendedor" />
+      <End Role="venta" EntitySet="venta" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

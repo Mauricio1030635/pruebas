@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="pruebasModelStoreContainer" CdmEntityContainer="pruebasEntities">
+    <EntitySetMapping Name="marca">
+      <EntityTypeMapping TypeName="pruebasModel.marca">
+        <MappingFragment StoreEntitySet="marca">
+          <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vehículo">
+      <EntityTypeMapping TypeName="pruebasModel.vehículo">
+        <MappingFragment StoreEntitySet="vehículo">
+          <ScalarProperty Name="id_vehículo" ColumnName="id_vehículo" />
+          <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+          <ScalarProperty Name="matricula" ColumnName="matricula" />
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vendedor">
+      <EntityTypeMapping TypeName="pruebasModel.vendedor">
+        <MappingFragment StoreEntitySet="vendedor">
+          <ScalarProperty Name="id_vendedor" ColumnName="id_vendedor" />
+          <ScalarProperty Name="cedula" ColumnName="cedula" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="edad" ColumnName="edad" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="venta">
+      <EntityTypeMapping TypeName="pruebasModel.venta">
+        <MappingFragment StoreEntitySet="venta">
+          <ScalarProperty Name="id_venta" ColumnName="id_venta" />
+          <ScalarProperty Name="id_vehículo" ColumnName="id_vehículo" />
+          <ScalarProperty Name="id_vendedor" ColumnName="id_vendedor" />
+          <ScalarProperty Name="fecha_venta" ColumnName="fecha_venta" />
+          <ScalarProperty Name="valorVenta" ColumnName="valorVenta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ventas">
+      <EntityTypeMapping TypeName="pruebasModel.ventas">
+        <MappingFragment StoreEntitySet="ventas">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="cedula" ColumnName="cedula" />
+          <ScalarProperty Name="Nombre_vendedor" ColumnName="Nombre vendedor" />
+          <ScalarProperty Name="Apellido_vendedor" ColumnName="Apellido vendedor" />
+          <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+          <ScalarProperty Name="Marca" ColumnName="Marca" />
+          <ScalarProperty Name="Color_Auto" ColumnName="Color Auto" />
+          <ScalarProperty Name="Valor_Unitario" ColumnName="Valor Unitario" />
+          <ScalarProperty Name="Valor_Total" ColumnName="Valor Total" />
+          <ScalarProperty Name="Fecha_venta" ColumnName="Fecha venta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="vehiculosVendedor" FunctionName="pruebasModel.Store.vehiculosVendedor">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="pruebasModel.vehiculosVendedor_Result">
+          <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+          <ScalarProperty Name="Marca" ColumnName="Marca" />
+          <ScalarProperty Name="Color_Auto" ColumnName="Color Auto" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

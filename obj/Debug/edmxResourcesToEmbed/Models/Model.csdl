@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="pruebasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="marca">
+    <Key>
+      <PropertyRef Name="id_marca" />
+    </Key>
+    <Property Name="id_marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="vehículo" Relationship="Self.FK__vehículo__id_mar__267ABA7A" FromRole="marca" ToRole="vehículo" />
+  </EntityType>
+  <EntityType Name="vehículo">
+    <Key>
+      <PropertyRef Name="id_vehículo" />
+    </Key>
+    <Property Name="id_vehículo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_marca" Type="Int32" />
+    <Property Name="matricula" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="precioUnitario" Type="Double" Nullable="false" />
+    <NavigationProperty Name="marca" Relationship="Self.FK__vehículo__id_mar__267ABA7A" FromRole="vehículo" ToRole="marca" />
+    <NavigationProperty Name="venta" Relationship="Self.FK__venta__id_vehícu__2C3393D0" FromRole="vehículo" ToRole="venta" />
+  </EntityType>
+  <EntityType Name="vendedor">
+    <Key>
+      <PropertyRef Name="id_vendedor" />
+    </Key>
+    <Property Name="id_vendedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cedula" Type="Int64" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="edad" Type="Byte" Nullable="false" />
+    <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="venta" Relationship="Self.FK__venta__id_vended__2D27B809" FromRole="vendedor" ToRole="venta" />
+  </EntityType>
+  <EntityType Name="venta">
+    <Key>
+      <PropertyRef Name="id_venta" />
+    </Key>
+    <Property Name="id_venta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_vehículo" Type="Int32" />
+    <Property Name="id_vendedor" Type="Int32" />
+    <Property Name="fecha_venta" Type="DateTime" Precision="0" />
+    <Property Name="valorVenta" Type="Double" Nullable="false" />
+    <NavigationProperty Name="vehículo" Relationship="Self.FK__venta__id_vehícu__2C3393D0" FromRole="venta" ToRole="vehículo" />
+    <NavigationProperty Name="vendedor" Relationship="Self.FK__venta__id_vended__2D27B809" FromRole="venta" ToRole="vendedor" />
+  </EntityType>
+  <EntityType Name="ventas">
+    <Key>
+      <PropertyRef Name="cedula" />
+      <PropertyRef Name="Nombre_vendedor" />
+      <PropertyRef Name="Apellido_vendedor" />
+      <PropertyRef Name="Matricula" />
+      <PropertyRef Name="Marca" />
+      <PropertyRef Name="Color_Auto" />
+      <PropertyRef Name="Valor_Unitario" />
+      <PropertyRef Name="Valor_Total" />
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="cedula" Type="Int64" Nullable="false" />
+    <Property Name="Nombre_vendedor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido_vendedor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Matricula" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Marca" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Color_Auto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Valor_Unitario" Type="Double" Nullable="false" />
+    <Property Name="Valor_Total" Type="Double" Nullable="false" />
+    <Property Name="Fecha_venta" Type="DateTime" Precision="0" />
+    <Property Name="ID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__vehículo__id_mar__267ABA7A">
+    <End Role="marca" Type="Self.marca" Multiplicity="0..1" />
+    <End Role="vehículo" Type="Self.vehículo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="marca">
+        <PropertyRef Name="id_marca" />
+      </Principal>
+      <Dependent Role="vehículo">
+        <PropertyRef Name="id_marca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__venta__id_vehícu__2C3393D0">
+    <End Role="vehículo" Type="Self.vehículo" Multiplicity="0..1" />
+    <End Role="venta" Type="Self.venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vehículo">
+        <PropertyRef Name="id_vehículo" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="id_vehículo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__venta__id_vended__2D27B809">
+    <End Role="vendedor" Type="Self.vendedor" Multiplicity="0..1" />
+    <End Role="venta" Type="Self.venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vendedor">
+        <PropertyRef Name="id_vendedor" />
+      </Principal>
+      <Dependent Role="venta">
+        <PropertyRef Name="id_vendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="pruebasEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="marca" EntityType="Self.marca" />
+    <EntitySet Name="vehículo" EntityType="Self.vehículo" />
+    <EntitySet Name="vendedor" EntityType="Self.vendedor" />
+    <EntitySet Name="venta" EntityType="Self.venta" />
+    <EntitySet Name="ventas" EntityType="Self.ventas" />
+    <AssociationSet Name="FK__vehículo__id_mar__267ABA7A" Association="Self.FK__vehículo__id_mar__267ABA7A">
+      <End Role="marca" EntitySet="marca" />
+      <End Role="vehículo" EntitySet="vehículo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__venta__id_vehícu__2C3393D0" Association="Self.FK__venta__id_vehícu__2C3393D0">
+      <End Role="vehículo" EntitySet="vehículo" />
+      <End Role="venta" EntitySet="venta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__venta__id_vended__2D27B809" Association="Self.FK__venta__id_vended__2D27B809">
+      <End Role="vendedor" EntitySet="vendedor" />
+      <End Role="venta" EntitySet="venta" />
+    </AssociationSet>
+    <FunctionImport Name="vehiculosVendedor" ReturnType="Collection(pruebasModel.vehiculosVendedor_Result)">
+      <Parameter Name="cedula" Mode="In" Type="Int64" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="vehiculosVendedor_Result">
+    <Property Type="String" Name="Matricula" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="Marca" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="Color_Auto" Nullable="false" MaxLength="50" />
+  </ComplexType>
+</Schema>
